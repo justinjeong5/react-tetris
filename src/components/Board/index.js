@@ -1,9 +1,12 @@
 import React from 'react';
 
+import Table from './Table';
+
 function Board() {
+
   return (
     <div>
-      Board
+      <Table />
     </div>
   );
 }
