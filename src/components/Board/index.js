@@ -1,13 +1,10 @@
 import React from 'react';
-
-import Table from './Table';
+import Canvas from './Canvas';
 
 function Board() {
 
   return (
-    <div>
-      <Table />
-    </div>
+    <Canvas />
   );
 }
 
