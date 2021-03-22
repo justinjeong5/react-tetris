@@ -89,11 +89,25 @@ export default class Tetris {
     }, 16);
   }
 
+  getColors(index) {
+    const colors = [
+      '',
+      'Coral',
+      'DarkKhaki',
+      'MediumPurple',
+      'MediumSeaGreen',
+      'SkyBlue',
+      'SandyBrown',
+      'DarkGray',
+    ];
+    return colors[index];
+  }
+
   drawBlock(target, offset = { y: 0, x: 0 }) {
     target.forEach((rowData, y) => {
       rowData.forEach((value, x) => {
         if (value) {
-          this.context.fillStyle = 'red';
+          this.context.fillStyle = this.getColors(value);
           this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
