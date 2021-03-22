@@ -39,6 +39,28 @@ export default class Tetris {
           break;
       }
     });
+    this.isDraging = false;
+    this.semaphore = true;
+    document.querySelector('#canvas').addEventListener('mouseenter', () => this.isDraging = true);
+    document.querySelector('#canvas').addEventListener('mouseleave', () => this.isDraging = false);
+    document.querySelector('#canvas').addEventListener('mousemove', this.handleMouse.bind(this));
+  }
+
+  handleMouse(e) {
+    if (!this.semaphore) return;
+    this.semaphore = false;
+    if (!this.isDraging) return;
+    const { offsetX } = e;
+    const { width } = e.target;
+    const targetIndex = Math.floor(10 * (offsetX / width));
+    if (this.player.position.x > targetIndex) {
+      this.playerMove({ y: 0, x: -1 });
+    } else if (this.player.position.x < targetIndex) {
+      this.playerMove({ y: 0, x: 1 });
+    }
+    setTimeout(() => {
+      this.semaphore = true;
+    }, 16);
   }
 
   eleminate() {
@@ -143,7 +165,9 @@ export default class Tetris {
       if (option) {
         this.playerMoveDone();
       }
+      return false;
     }
+    return true;
   }
 
   render(time = 0) {

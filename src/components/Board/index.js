@@ -18,7 +18,7 @@ function Board(props) {
   }, []);
 
   return (
-    <canvas ref={canvasRef} {...props} />
+    <canvas id='canvas' ref={canvasRef} {...props} />
   );
 }
 
