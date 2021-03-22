@@ -16,7 +16,7 @@ function LandingPage() {
     <div>
       <Score />
       <Flex>
-        <Board width='200px' height='400px' />
+        <Board width='300px' height='600px' />
         <SidePanel />
       </Flex>
     </div>

@@ -12,7 +12,12 @@ function Board(props) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    context.scale(20, 20);
+    let height = document.documentElement.clientHeight;
+    const scale = height * 0.4 * 0.1;
+    context.canvas.width = (height * 0.4);
+    context.canvas.height = (height * 0.8);
+
+    context.scale(scale, scale);
 
     new Tetris({ context, player, board, dispatch });
   }, []);
