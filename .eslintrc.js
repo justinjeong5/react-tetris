@@ -21,10 +21,10 @@ module.exports = {
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": ["js", "jsx"] }],
-        "arrow-parens": ["warn", "as-needed"],
+        "arrow-parens": ["warn", "always"],
         "no-console": ["off"],
-        "react/jsx-props-no-spreading": ["warn"],
+        "react/jsx-props-no-spreading": ["off"],
         "semi": ["error", "always"],
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
     }
 };
