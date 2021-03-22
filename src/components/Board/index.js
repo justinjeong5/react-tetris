@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setTetris } from '../../actions/board';
 
 import Tetris from '../../utils/tetris';
 
@@ -19,7 +20,8 @@ function Board(props) {
 
     context.scale(scale, scale);
 
-    new Tetris({ context, player, board, dispatch });
+    const tetris = new Tetris({ context, player, board, dispatch });
+    dispatch(setTetris(tetris));
   }, []);
 
   return (

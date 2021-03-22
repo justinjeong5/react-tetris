@@ -1,6 +1,6 @@
 import producer from 'immer';
 import {
-  MOVE_PLAYER, RESET_PLAYER,
+  MOVE_PLAYER, RESET_PLAYER, FINISH_GAME,
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +21,12 @@ const player = (state = initialState, action) => {
         draft.player.position.y = 0;
         draft.player.position.x = 4;
         draft.player.block = action.data.block;
+        break;
+      case FINISH_GAME:
+        draft.player = {
+          position: { y: 0, x: 4 },
+          block: null,
+        };
         break;
       default:
         break;

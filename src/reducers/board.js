@@ -1,6 +1,6 @@
 import producer from 'immer';
 import {
-  MERGE_BOARD, UPDATE_BOARD, ADD_BLOCK,
+  MERGE_BOARD, UPDATE_BOARD, ADD_BLOCK, FINISH_GAME, SET_TETRIS
 } from '../actions/types';
 import { getNextBlock } from '../utils/block';
 
@@ -10,6 +10,7 @@ const initialBoard = Array.from(Array(Y)).map(() => Array.from(Array(X)).fill(0)
 const initialState = {
   board: initialBoard,
   nextBlock: Array.from(Array(5)).map(() => getNextBlock()),
+  tetris: null,
 };
 
 const board = (state = initialState, action) => {
@@ -25,6 +26,12 @@ const board = (state = initialState, action) => {
         break;
       case ADD_BLOCK:
         draft.board.push(getNextBlock());
+        break;
+      case FINISH_GAME:
+        draft.board = initialBoard;
+        break;
+      case SET_TETRIS:
+        draft.tetris = action.data.tetris;
         break;
       default:
         break;

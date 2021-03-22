@@ -1,6 +1,6 @@
 import { movePlayer, resetPlayer } from '../actions/player';
-import { mergeBoard, updateBoard } from '../actions/board';
-import { setScore } from '../actions/score';
+import { mergeBoard, updateBoard, finishGame } from '../actions/board';
+import { setScore, updateHighScore } from '../actions/score';
 import { getNextBlock } from './block';
 
 export default class Tetris {
@@ -12,6 +12,8 @@ export default class Tetris {
     this.dispatch = dispatch;
     this.lastTime = 0;
     this.timer = 0;
+    this.gameEnd = false;
+    this.score = 0;
 
     this.init();
     this.addHandler();
@@ -22,6 +24,25 @@ export default class Tetris {
   init() {
     this.context.fillStyle = '#000000';
     this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+  }
+
+  resume() {
+    console.log('Reset Game');
+
+    this.gameEnd = false;
+    const block = getNextBlock();
+    this.dispatch(resetPlayer(block));
+    this.player.block = block;
+    this.player.position = { y: 0, x: 4 };
+
+    const board = Array.from(Array(20)).map(() => Array.from(Array(10)).fill(0));
+    this.board = board;
+    this.dispatch(updateBoard(board));
+
+    this.dispatch(updateHighScore(this.score));
+    this.score = 0;
+
+    this.render();
   }
 
   addHandler() {
@@ -36,6 +57,11 @@ export default class Tetris {
         case 40:
           this.playerMove({ y: 1, x: 0 }, true);
           this.timer = 0;
+          break;
+        case 33:
+          console.log('space entered');
+          // eslint-disable-next-line no-empty
+          while (!this.playerMove({ y: 1, x: 0 }, true)) { }
           break;
       }
     });
@@ -52,7 +78,7 @@ export default class Tetris {
     if (!this.isDraging) return;
     const { offsetX } = e;
     const { width } = e.target;
-    const targetIndex = Math.floor(10 * (offsetX / width));
+    const targetIndex = Math.floor(10 * (offsetX / width)) - 1;
     if (this.player.position.x > targetIndex) {
       this.playerMove({ y: 0, x: -1 });
     } else if (this.player.position.x < targetIndex) {
@@ -61,10 +87,6 @@ export default class Tetris {
     setTimeout(() => {
       this.semaphore = true;
     }, 16);
-  }
-
-  eleminate() {
-    cancelAnimationFrame(this.animationFrameKey);
   }
 
   drawBlock(target, offset = { y: 0, x: 0 }) {
@@ -108,6 +130,7 @@ export default class Tetris {
     }
     if (score > 0) {
       this.dispatch(setScore(score));
+      this.score += score;
     }
   }
 
@@ -143,7 +166,6 @@ export default class Tetris {
     this.merge();
     this.boomLine();
     const block = getNextBlock();
-
     this.dispatch(resetPlayer(block));
     this.dispatch(updateBoard(this.board));
 
@@ -151,7 +173,9 @@ export default class Tetris {
     this.player.block = block;
     if (this.collision()) {
       console.log('End Game');
-      this.eleminate();
+      this.gameEnd = true;
+      this.dispatch(finishGame(this.score));
+      this.dispatch(updateHighScore(this.score));
     }
   }
 
@@ -171,6 +195,7 @@ export default class Tetris {
   }
 
   render(time = 0) {
+    if (this.gameEnd) return;
     const timePass = time - this.lastTime;
     this.lastTime = time;
     this.timer += timePass;
@@ -179,6 +204,6 @@ export default class Tetris {
       this.timer = 0;
     }
     this.draw();
-    this.animationFrameKey = requestAnimationFrame(this.render.bind(this));
+    requestAnimationFrame(this.render.bind(this));
   }
 }
