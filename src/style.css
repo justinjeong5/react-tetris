@@ -1,0 +1,7 @@
+html {
+	background-image: url('../src/img/bricks.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+}

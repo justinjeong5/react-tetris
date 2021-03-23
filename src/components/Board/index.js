@@ -30,7 +30,7 @@ function Board(props) {
     if (finish) {
       return {
         'position': 'fixed',
-        'top': '110px',
+        'top': '100px',
         'width': '100%',
         'height': '80%',
         'backgroundColor': 'rgba(0, 0, 0, 0.5)',

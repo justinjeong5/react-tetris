@@ -1,51 +1,52 @@
 const BLOCK = {
-  SQUARE: [
+  SQUARE1: [
     [1, 1, 0],
     [1, 1, 0],
     [0, 0, 0],
   ],
-  LEFT_BOTTOM: [
-    [2, 0, 0],
-    [2, 2, 2],
+  SQUARE2: [
+    [2, 2, 0],
+    [2, 2, 0],
     [0, 0, 0],
   ],
-  RIGHT_BOTTOM: [
-    [0, 0, 3],
-    [3, 3, 3],
+  SQUARE3: [
+    [3, 3, 0],
+    [3, 3, 0],
     [0, 0, 0],
   ],
-  LEFT_UP: [
-    [4, 0, 0],
+  SQUARE4: [
     [4, 4, 0],
-    [0, 4, 0],
-  ],
-  RIGHT_UP: [
-    [0, 5, 0],
-    [5, 5, 0],
-    [5, 0, 0],
-  ],
-  MIDDLE: [
-    [0, 6, 0],
-    [6, 6, 6],
+    [4, 4, 0],
     [0, 0, 0],
   ],
-  BAR: [
-    [0, 7, 0, 0],
-    [0, 7, 0, 0],
-    [0, 7, 0, 0],
-    [0, 7, 0, 0],
+  SQUARE5: [
+    [5, 5, 0],
+    [5, 5, 0],
+    [0, 0, 0],
+  ],
+  SQUARE6: [
+    [6, 6, 0],
+    [6, 6, 0],
+    [0, 0, 0],
+  ],
+  SQUARE7: [
+    [7, 7, 0],
+    [7, 7, 0],
+    [0, 0, 0],
   ],
 };
+let count = -1;
 
 export const getNextBlock = () => {
   const blocks = [
-    BLOCK.SQUARE,
-    BLOCK.LEFT_BOTTOM,
-    BLOCK.RIGHT_BOTTOM,
-    BLOCK.LEFT_UP,
-    BLOCK.RIGHT_UP,
-    BLOCK.MIDDLE,
-    BLOCK.BAR
+    BLOCK.SQUARE1,
+    BLOCK.SQUARE2,
+    BLOCK.SQUARE3,
+    BLOCK.SQUARE4,
+    BLOCK.SQUARE5,
+    BLOCK.SQUARE6,
+    BLOCK.SQUARE7,
   ];
-  return blocks[Math.floor(Math.random() * 7)];
+  count = (count + 1) % 7;
+  return blocks[count];
 };

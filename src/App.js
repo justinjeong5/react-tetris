@@ -1,11 +1,10 @@
 import React from 'react';
 import LandingPage from './components/LandingPage';
-import 'antd/dist/antd.css';
+import './style.css';
 
 function App() {
   return (
     <div>
-      React Tetris
       <LandingPage />
     </div>
   );

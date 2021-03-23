@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Alert } from 'antd';
 import { resetScore, updateHighScore } from '../../actions/score';
 
 const Wrapper = styled.div`
@@ -9,30 +8,32 @@ const Wrapper = styled.div`
   justify-content: space-around; 
   align-items: center; 
   margin: 30px;
+  height: 40px;
 `;
 const ScoreSpan = styled.span`
   margin-right: 30px;
 `;
-const StyledAlert = styled(Alert)`
+const Alert = styled.div`
   position: fixed;
-  top: 50%;
+  top: calc(40% + 70px);
   width: 100%;
   text-align: center;
   font-size: 20px;
   font-weight: 600;
+  color: white;
   z-index: 100;
+  background-color: CornflowerBlue;
+  padding: 10px 0px;
 `;
 
 function Score() {
   const dispatch = useDispatch();
-  const { score, highScore, finish, newRecord } = useSelector((state) => state.score);
+  const { score, highScore, newRecord, finish } = useSelector((state) => state.score);
   const { tetris } = useSelector((state) => state.board);
 
   useEffect(() => {
     const existScore = parseInt(localStorage.getItem('tetrisScore') || 0);
-    if (highScore <= existScore) {
-      dispatch(updateHighScore(existScore));
-    }
+    dispatch(updateHighScore(existScore));
   }, [localStorage]);
 
   const handleRestart = useCallback(() => {
@@ -49,8 +50,8 @@ function Score() {
         </div>
         <button onClick={handleRestart}>Restart</button>
       </Wrapper>
-      {finish && newRecord && <StyledAlert message="최고기록을 갱신했습니다!" type="success" />}
-      {finish && !newRecord && <StyledAlert message="게임이 종료되었습니다." type="info" />}
+      {finish && newRecord && <Alert>최고기록을 갱신했습니다!</Alert>}
+      {finish && !newRecord && <Alert>게임이 종료되었습니다.</Alert>}
     </>
   );
 }
