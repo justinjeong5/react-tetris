@@ -25,10 +25,14 @@ const player = (state = initialState, action) => {
         break;
       case UPDATE_HIGH_SCORE: {
         const localScore = parseInt(localStorage.getItem('tetrisScore') || 0);
-        if (localScore <= action.data.score) {
+        if (localScore < action.data.score) {
           localStorage.setItem('tetrisScore', action.data.score);
         }
+        if (draft.highScore < localScore) {
+          draft.highScore = localScore;
+        }
         if (draft.highScore < action.data.score) {
+          console.log({ hightscore: draft.highScore, score: action.data.score });
           draft.newRecord = true;
           draft.highScore = action.data.score;
         }
