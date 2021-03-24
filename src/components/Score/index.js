@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, memo } from 'react';
+import React, { useCallback, useEffect, memo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { resetScore, updateHighScore } from '../../actions/score';
@@ -37,6 +37,7 @@ const Button = styled.button`
 
 function Score() {
   const dispatch = useDispatch();
+  const buttonRef = useRef(null);
   const { score, highScore, newRecord, finish } = useSelector((state) => state.score);
   const { tetris } = useSelector((state) => state.board);
 
@@ -46,6 +47,7 @@ function Score() {
   }, [localStorage]);
 
   const handleRestart = useCallback(() => {
+    buttonRef.current.blur();
     tetris.resume();
     dispatch(resetScore());
   }, [tetris]);
@@ -57,7 +59,7 @@ function Score() {
           <ScoreSpan>Score : {score}</ScoreSpan>
           <ScoreSpan>HighScore : {highScore}</ScoreSpan>
         </StyledScore>
-        <Button onClick={handleRestart}>Restart</Button>
+        <Button ref={buttonRef} onClick={handleRestart}>Restart</Button>
       </Wrapper>
       {finish && newRecord && <Alert>최고기록을 갱신했습니다!</Alert>}
       {finish && !newRecord && <Alert>게임이 종료되었습니다.</Alert>}
