@@ -25,6 +25,15 @@ const Alert = styled.div`
   background-color: CornflowerBlue;
   padding: 10px 0px;
 `;
+const StyledScore = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+`;
+const Button = styled.button`
+  padding: 10px 20px;
+  font-weight: 700;
+`;
 
 function Score() {
   const dispatch = useDispatch();
@@ -44,11 +53,11 @@ function Score() {
   return (
     <>
       <Wrapper>
-        <div>
+        <StyledScore>
           <ScoreSpan>Score : {score}</ScoreSpan>
           <ScoreSpan>HighScore : {highScore}</ScoreSpan>
-        </div>
-        <button onClick={handleRestart}>Restart</button>
+        </StyledScore>
+        <Button onClick={handleRestart}>Restart</Button>
       </Wrapper>
       {finish && newRecord && <Alert>최고기록을 갱신했습니다!</Alert>}
       {finish && !newRecord && <Alert>게임이 종료되었습니다.</Alert>}
