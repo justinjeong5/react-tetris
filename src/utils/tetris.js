@@ -44,7 +44,7 @@ export default class Tetris {
   initNextBlock() {
     Array.from(Array(4)).forEach(() => this.pushNextBlock());
   }
-  addHandler() {
+  initHandler() {
     document.addEventListener('keydown', (e) => {
       switch (e.keyCode) {
         case 37:
@@ -57,10 +57,10 @@ export default class Tetris {
           this.playerMove({ y: 1, x: 0 }, true);
           this.timer = 0;
           break;
-        case 33:
-          console.log('space entered');
-          // eslint-disable-next-line no-empty
-          while (!this.playerMove({ y: 1, x: 0 }, true)) { }
+        case 32:
+          while (this.playerMove({ y: 1, x: 0 }, true)) continue;
+          break;
+        default:
           break;
       }
     });
