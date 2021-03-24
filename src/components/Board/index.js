@@ -6,7 +6,7 @@ import Tetris from '../../utils/tetris';
 
 function Board() {
   const dispatch = useDispatch();
-  const { player } = useSelector((state) => state.player);
+  const { block, position } = useSelector((state) => state.player);
   const { board } = useSelector((state) => state.board);
   const { finish } = useSelector((state) => state.score);
   const canvasRef = useRef(null);
@@ -14,7 +14,7 @@ function Board() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-
+    const player = { position, block };
     const tetris = new Tetris({ context, player, board, dispatch });
     dispatch(setTetris(tetris));
   }, []);
