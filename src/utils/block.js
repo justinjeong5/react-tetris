@@ -35,6 +35,18 @@ const BLOCK = {
     [0, 0, 0],
   ],
 };
+
+export const colors = [
+  '',
+  'Coral',
+  'DarkKhaki',
+  'MediumPurple',
+  'MediumSeaGreen',
+  'SkyBlue',
+  'SandyBrown',
+  'DarkGray',
+];
+
 let count = -1;
 
 export const getNextBlock = () => {

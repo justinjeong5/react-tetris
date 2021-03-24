@@ -1,7 +1,7 @@
 import { movePlayer, resetPlayer } from '../actions/player';
 import { mergeBoard, updateBoard, finishGame } from '../actions/board';
 import { setScore, updateHighScore } from '../actions/score';
-import { getNextBlock } from './block';
+import { getNextBlock, colors } from './block';
 
 export default class Tetris {
   constructor({ context, player, board, dispatch }) {
@@ -89,25 +89,11 @@ export default class Tetris {
     }, 16);
   }
 
-  getColors(index) {
-    const colors = [
-      '',
-      'Coral',
-      'DarkKhaki',
-      'MediumPurple',
-      'MediumSeaGreen',
-      'SkyBlue',
-      'SandyBrown',
-      'DarkGray',
-    ];
-    return colors[index];
-  }
-
   drawBlock(target, offset = { y: 0, x: 0 }) {
     target.forEach((rowData, y) => {
       rowData.forEach((value, x) => {
         if (value) {
-          this.context.fillStyle = this.getColors(value);
+          this.context.fillStyle = colors[value];
           this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
