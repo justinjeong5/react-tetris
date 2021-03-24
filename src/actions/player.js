@@ -9,9 +9,10 @@ export const movePlayer = (position) => ({
   },
 });
 
-export const resetPlayer = (block) => ({
+export const resetPlayer = (position, block) => ({
   type: RESET_PLAYER,
   data: {
+    position,
     block
   }
 });

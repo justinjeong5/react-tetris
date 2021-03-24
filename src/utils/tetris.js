@@ -1,31 +1,35 @@
 import { movePlayer, resetPlayer } from '../actions/player';
-import { mergeBoard, updateBoard, finishGame } from '../actions/board';
+import { mergeBoard, updateBoard, finishGame, pushNext } from '../actions/board';
 import { setScore, updateHighScore } from '../actions/score';
 import { getNextBlock, colors } from './block';
 
 export default class Tetris {
   constructor({ context, player, board, dispatch }) {
     this.context = context;
-    this.player = JSON.parse(JSON.stringify(player));
-    this.player.block = getNextBlock();
-    this.board = JSON.parse(JSON.stringify(board));
     this.dispatch = dispatch;
+
+    this.nextBlock = [];
+    this.pushNextBlock();
+    this.player = JSON.parse(JSON.stringify(player));
+    this.player.block = this.nextBlock[0];
+    this.board = JSON.parse(JSON.stringify(board));
     this.lastTime = 0;
     this.timer = 0;
     this.gameEnd = false;
     this.score = 0;
+    this.ROW = board.length;
+    this.COL = board[0].length;
 
     this.init();
-    this.addHandler();
+    this.initNextBlock();
+    this.initHandler();
     console.log('START Game');
     this.render();
   }
 
   init() {
     let height = document.documentElement.clientHeight;
-    const col = this.board[0].length;
-    const row = this.board.length;
-    const ratio = (col / row);
+    const ratio = (this.COL / this.ROW);
     const scale = height * ratio * 0.8 * 0.1;
     this.context.canvas.width = (height * ratio * 0.8);
     this.context.canvas.height = (height * 0.8);
@@ -37,14 +41,15 @@ export default class Tetris {
 
   resume() {
     console.log('Reset Game');
-
     this.gameEnd = false;
+    this.pushNextBlock();
     const block = getNextBlock();
-    this.dispatch(resetPlayer(block));
+    const position = { y: 0, x: 4 };
     this.player.block = block;
-    this.player.position = { y: 0, x: 4 };
+    this.dispatch(resetPlayer(position, block));
+    this.player.position = position;
 
-    const board = Array.from(Array(20)).map(() => Array.from(Array(10)).fill(0));
+    const board = this.initBoard();
     this.board = board;
     this.dispatch(updateBoard(board));
 
@@ -54,6 +59,12 @@ export default class Tetris {
     this.render();
   }
 
+  initBoard() {
+    return Array.from(Array(this.ROW)).map(() => Array.from(Array(this.COL)).fill(0));
+  }
+  initNextBlock() {
+    Array.from(Array(4)).forEach(() => this.pushNextBlock());
+  }
   addHandler() {
     document.addEventListener('keydown', (e) => {
       switch (e.keyCode) {
@@ -79,6 +90,16 @@ export default class Tetris {
     document.querySelector('#canvas').addEventListener('mouseenter', () => this.isDraging = true);
     document.querySelector('#canvas').addEventListener('mouseleave', () => this.isDraging = false);
     document.querySelector('#canvas').addEventListener('mousemove', this.handleMouse.bind(this));
+  }
+
+  pushNextBlock() {
+    const block = getNextBlock();
+    this.nextBlock.push(block);
+    this.dispatch(pushNext(block));
+  }
+  popNextBlock() {
+    this.pushNextBlock();
+    return this.nextBlock.splice(0, 1)[0];
   }
 
   handleMouse(e) {
@@ -174,11 +195,11 @@ export default class Tetris {
   playerMoveDone() {
     this.merge();
     this.boomLine();
-    const block = getNextBlock();
-    this.dispatch(resetPlayer(block));
+    const block = this.popNextBlock();
     this.dispatch(updateBoard(this.board));
-
-    this.player.position = { y: 0, x: 4 };
+    const position = { y: 0, x: 4 };
+    this.dispatch(resetPlayer(position, block));
+    this.player.position = position;
     this.player.block = block;
     if (this.collision()) {
       console.log('End Game');
@@ -195,9 +216,7 @@ export default class Tetris {
     if (this.collision()) {
       this.player.position.y -= position.y;
       this.player.position.x -= position.x;
-      if (option) {
-        this.playerMoveDone();
-      }
+      option && this.playerMoveDone();
       return false;
     }
     return true;

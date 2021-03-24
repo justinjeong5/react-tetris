@@ -1,4 +1,13 @@
-import { MERGE_BOARD, UPDATE_BOARD, FINISH_GAME, START_GAME, SET_TETRIS } from './types';
+import {
+  INIT_BOARD, MERGE_BOARD, UPDATE_BOARD, FINISH_GAME, START_GAME, SET_TETRIS, PUSH_NEXT
+} from './types';
+
+export const initBoard = ({ row, col }) => ({
+  type: INIT_BOARD,
+  data: {
+    row, col
+  }
+});
 
 export const mergeBoard = (position, value) => ({
   type: MERGE_BOARD,
@@ -32,3 +41,11 @@ export const setTetris = (tetris) => ({
     tetris
   }
 });
+
+export const pushNext = (block) => ({
+  type: PUSH_NEXT,
+  data: {
+    block
+  }
+});
+

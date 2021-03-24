@@ -18,8 +18,8 @@ const player = (state = initialState, action) => {
         draft.player.position.x += action.data.position.x;
         break;
       case RESET_PLAYER:
-        draft.player.position.y = 0;
-        draft.player.position.x = 4;
+        draft.player.position.y = action.data.position.y;
+        draft.player.position.x = action.data.position.x;
         draft.player.block = action.data.block;
         break;
       case FINISH_GAME:

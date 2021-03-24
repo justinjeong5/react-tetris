@@ -1,12 +1,14 @@
 // =========================================
 //                   Board
 // =========================================
+export const INIT_BOARD = 'INIT_BOARD';
 export const MERGE_BOARD = 'MERGE_BOARD';
 export const UPDATE_BOARD = 'UPDATE_BOARD';
 export const ADD_BLOCK = 'ADD_BLOCK';
 export const FINISH_GAME = 'FINISH_GAME';
 export const START_GAME = 'START_GAME';
 export const SET_TETRIS = 'SET_TETRIS';
+export const PUSH_NEXT = 'PUSH_NEXT';
 
 // =========================================
 //                  Player
