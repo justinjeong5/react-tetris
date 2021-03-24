@@ -38,27 +38,6 @@ export default class Tetris {
     this.context.fillStyle = '#000000';
     this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
   }
-
-  resume() {
-    console.log('Reset Game');
-    this.gameEnd = false;
-    this.pushNextBlock();
-    const block = getNextBlock();
-    const position = { y: 0, x: 4 };
-    this.player.block = block;
-    this.dispatch(resetPlayer(position, block));
-    this.player.position = position;
-
-    const board = this.initBoard();
-    this.board = board;
-    this.dispatch(updateBoard(board));
-
-    this.dispatch(updateHighScore(this.score));
-    this.score = 0;
-
-    this.render();
-  }
-
   initBoard() {
     return Array.from(Array(this.ROW)).map(() => Array.from(Array(this.COL)).fill(0));
   }
@@ -102,6 +81,26 @@ export default class Tetris {
     return this.nextBlock.splice(0, 1)[0];
   }
 
+  resume() {
+    console.log('Reset Game');
+    this.gameEnd = false;
+    this.pushNextBlock();
+    const block = getNextBlock();
+    const position = { y: 0, x: 4 };
+    this.player.block = block;
+    this.dispatch(resetPlayer(position, block));
+    this.player.position = position;
+
+    const board = this.initBoard();
+    this.board = board;
+    this.dispatch(updateBoard(board));
+
+    this.dispatch(updateHighScore(this.score));
+    this.score = 0;
+
+    this.render();
+  }
+
   handleMouse(e) {
     if (!this.semaphore) return;
     this.semaphore = false;
@@ -139,11 +138,10 @@ export default class Tetris {
   boomLine() {
     let score = 0;
     let multiple = 1;
-    const SIZ = this.board[0].length;
 
-    for (let y = this.board.length - 1; y >= 0; --y) {
+    for (let y = this.ROW - 1; y >= 0; --y) {
       let toRemove = true;
-      for (let x = 0; x < this.board[0].length; ++x) {
+      for (let x = 0; x < this.COL; ++x) {
         if (this.board[y][x] === 0) {
           toRemove = false;
           break;
@@ -151,9 +149,9 @@ export default class Tetris {
       }
       if (toRemove) {
         this.board.splice(y, 1);
-        const row = Array.from(Array(SIZ)).fill(0);
+        const row = Array.from(Array(this.COL)).fill(0);
         this.board.unshift(row);
-        score += multiple * SIZ;
+        score += multiple * this.COL;
         multiple++;
         ++y;
       }
