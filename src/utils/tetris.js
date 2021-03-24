@@ -22,6 +22,15 @@ export default class Tetris {
   }
 
   init() {
+    let height = document.documentElement.clientHeight;
+    const col = this.board[0].length;
+    const row = this.board.length;
+    const ratio = (col / row);
+    const scale = height * ratio * 0.8 * 0.1;
+    this.context.canvas.width = (height * ratio * 0.8);
+    this.context.canvas.height = (height * 0.8);
+    this.context.scale(scale, scale);
+
     this.context.fillStyle = '#000000';
     this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
   }
