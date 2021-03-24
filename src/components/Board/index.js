@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { setTetris } from '../../actions/board';
 
 import Tetris from '../../utils/tetris';
 
-function Board(props) {
+function Board() {
   const dispatch = useDispatch();
   const { player } = useSelector((state) => state.player);
   const { board } = useSelector((state) => state.board);
@@ -39,14 +38,10 @@ function Board(props) {
   return (
     <>
       <div style={style()}></div>
-      <canvas id='canvas' ref={canvasRef} {...props} />
+      <canvas id='canvas' ref={canvasRef} />
     </>
   );
 }
 
-Board.propTypes = {
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-};
 
 export default Board;
