@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { colors } from '../../utils/block';
@@ -32,4 +32,4 @@ Td.propTypes = {
   col: PropTypes.number.isRequired,
 };
 
-export default Td;
+export default memo(Td);

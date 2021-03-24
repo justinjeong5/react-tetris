@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,4 +21,4 @@ Table.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-export default Table;
+export default memo(Table);

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { resetScore, updateHighScore } from '../../actions/score';
@@ -56,4 +56,4 @@ function Score() {
   );
 }
 
-export default Score;
+export default memo(Score);

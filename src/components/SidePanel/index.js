@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Table from './Table';
@@ -12,4 +12,4 @@ function SidePanel() {
   );
 }
 
-export default SidePanel;
+export default memo(SidePanel);

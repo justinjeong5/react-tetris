@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
@@ -18,4 +18,4 @@ Tr.propTypes = {
   row: PropTypes.number.isRequired,
 };
 
-export default Tr;
+export default memo(Tr);
