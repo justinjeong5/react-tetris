@@ -4,6 +4,12 @@ HTML canvas를 이용한 테트리스게임 🕹️
 
 ![ReactTetris](https://user-images.githubusercontent.com/44011462/112267654-23a84200-8cb9-11eb-84bf-0fd6a9fa326c.gif)
 
+```bash
+> git clone https://github.com/justinjeong5/react-tetris # 또는 다운로드
+> npm i
+> npm start
+# App starts at localhost:3000
+```
 
 ### 📚 기술스택
 - React
