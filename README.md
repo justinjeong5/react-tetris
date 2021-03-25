@@ -4,6 +4,8 @@ HTML canvas를 이용한 테트리스게임 🕹️
 
 ![ReactTetris](https://user-images.githubusercontent.com/44011462/112267654-23a84200-8cb9-11eb-84bf-0fd6a9fa326c.gif)
 
+[🕹️ 테스리스 게임 바로가기](https://kyunghajeong-tetris.herokuapp.com/)
+
 ```bash
 > git clone https://github.com/justinjeong5/react-tetris # 또는 다운로드
 > npm i
@@ -67,3 +69,16 @@ new Tetris({ context, player: player, board, dispatch })
 - `draw`: 사용자의 블럭, 게임에 놓여진 블록을 그림
   - 이전 단계의 그림을 지우기 위해 `init` 호출
   - `drawBlock`을 호출하여 이미 놓여진 블록정보, 사용자의 블록정보를 그림
+
+### 📚 어려웠던 점과 극복 방법
+프로젝트를 진행하면서 어려웠던 점과 해결과정을 적었습니다.
+
+##### 🎦 화면 렌더링 
+게임의 동작에 필요한 블럭과 게임보드를 표현하는 방법을 결정하는 것이 어려웠습니다. 단순하게 HTML의 Table, Tr, Td를 이용하는 방법과 HTML Canvas를 이용하는 방법 중에 고민하였습니다. 표(HTML table)을 이용하여 만든다면 이미지 효과를 표현하기 어렵다고 생각했습니다. 이에 비해 Canvas는 javascript가 그래픽을 다루는데 적절한 도구라고 생각했습니다. 
+
+##### 🖱️ 마우스로 조작하기
+마우스를 이용하여 블럭을 왼쪽, 오른쪽으로 움직이기 위해서 Canvas에 'mousemove'를 다루는 EventListener를 적용하여 사용했습니다. 사용자의 아주 작은 마우스 조작으로도 많은 mousemove 이벤트가 발생할 수 있습니다. 따라서 mousemove 이벤트가 불필요하게 많이 발생하고 성능상에 문제가 발생했습니다. OS의 mutex의 개념을 차용하여 mousemove 이벤트의 발생 빈도를 조절했습니다. 블럭의 이동은 Canvas내의 사용자의 마우스 위치와 Canvas의 크기를 이용하였습니다. 
+
+##### 🔓 확장성
+게임플레이에 필요한 요소(게임보드, 블럭)을 가능한 유동적으로 만들었습니다. 게임이 생성될 때 게임보드의 가로, 세로의 크기에 따라 화면을 적절하게 그리도록 구성했습니다. 사용자가 게임보드의 크기나 블럭의 종류를 정하도록 구성할 수 있습니다.
+
