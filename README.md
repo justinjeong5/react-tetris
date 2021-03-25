@@ -1,10 +1,10 @@
 # React Tetris 
 
-HTML canvas를 이용한 테트리스게임 🕹️
+HTML canvas를 이용한 🕹테트리스 게임    
+<a href="https://kyunghajeong-tetris.herokuapp.com/" target="_blank">테트리스 게임 바로가기[kyunghajeong-tetris.herokuapp.com]</a>
 
 ![ReactTetris](https://user-images.githubusercontent.com/44011462/112267654-23a84200-8cb9-11eb-84bf-0fd6a9fa326c.gif)
 
-<a href="https://kyunghajeong-tetris.herokuapp.com/" target="_blank">🕹️ 테트리스 게임 바로가기</a>
 
 ```bash
 > git clone https://github.com/justinjeong5/react-tetris # 또는 다운로드
@@ -34,6 +34,7 @@ new Tetris({ context, player, board, dispatch })
 - 게임보드는 기본으로 `가로 10칸`, `세로 20칸`
 - 블럭은 게임보드의 최상단에서 생성되고 `1초의 간격`을 두고 아래 방향으로 1칸씩 이동
   - `키보드의 방향버튼`을 이용하여 왼쪽, 오른쪽, 아래쪽으로 동작
+  - `스페이스바`를 이용하여 가장 아래로 블럭을 이동
   - `마우스의 커서`를 이용하여 왼쪽, 오른쪽 방향을 조작
 - 게임블럭 오른쪽에 `다음 블럭`이 순서대로 5개 노출
 - 다른 블럭이나, 게임블럭의 밑바닥을 접촉한 경우 블록이 멈추고 새로운 블럭이 최상단에서 시작
