@@ -65,7 +65,7 @@ export default class Tetris {
       }
     });
     this.isDraging = false;
-    this.semaphore = true;
+    this.timer = true;
     document.querySelector('#canvas').addEventListener('mouseenter', () => this.isDraging = true);
     document.querySelector('#canvas').addEventListener('mouseleave', () => this.isDraging = false);
     document.querySelector('#canvas').addEventListener('mousemove', this.handleMouse.bind(this));
@@ -102,19 +102,18 @@ export default class Tetris {
   }
 
   handleMouse(e) {
-    if (!this.semaphore) return;
-    this.semaphore = false;
-    if (!this.isDraging) return;
-    const { offsetX } = e;
-    const { width } = e.target;
-    const targetIndex = Math.floor(10 * (offsetX / width)) - 1;
-    if (this.player.position.x > targetIndex) {
-      this.playerMove({ y: 0, x: -1 });
-    } else if (this.player.position.x < targetIndex) {
-      this.playerMove({ y: 0, x: 1 });
+    if (!this.timer || !this.isDraging) {
+      return;
     }
-    setTimeout(() => {
-      this.semaphore = true;
+    this.timer = setTimeout(() => {
+      const { offsetX } = e;
+      const { width } = e.target;
+      const targetIndex = Math.floor(10 * (offsetX / width)) - 1;
+      if (this.player.position.x > targetIndex) {
+        this.playerMove({ y: 0, x: -1 });
+      } else if (this.player.position.x < targetIndex) {
+        this.playerMove({ y: 0, x: 1 });
+      }
     }, 16);
   }
 
